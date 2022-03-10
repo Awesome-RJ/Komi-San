@@ -9,9 +9,7 @@ col = users_db['USER']
 @bot.on_message(filters.command("start"))
 def update_stats(_,message):
   users = users_db.find({})
-  mfs = []
-  for x in col:
-    mfs.append(x['user_id'])
+  mfs = [x['user_id'] for x in col]
   if message.from_user.id not in mfs:
     user = {"type": "user" , "user_id": message.from_user.id}
     users_db.insert_one(user)
@@ -22,12 +20,9 @@ def update_stats(_,message):
 @bot.on_message(filters.command("stats"))
 def stats(_,message):
   users = col.find({})
-  mfs = []
-  for x in users:
-    mfs.append(x['user_id'])
-    
+  mfs = [x['user_id'] for x in users]
   total = len(mfs)
-  
+
   message.reply_text(f"Total Users: {total}")
   
 
